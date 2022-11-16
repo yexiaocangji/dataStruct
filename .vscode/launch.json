@@ -7,7 +7,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "run ts",
+            "name": "rollup task",
             "url": "${workspaceRoot}/bin/index.html",
             "webRoot": "${workspaceRoot}",
             "cwd": "${workspaceRoot}",
@@ -16,8 +16,25 @@
 				"--allow-file-access-frome-files",
 				" --disable-web-security"
             ],
-            "sourceMaps": true,
             "preLaunchTask": "gulpDemo",// 在launch之前运行的任务名,配置在tasks.json
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "gulp task",
+            "file": "${workspaceFolder}/bin/index.html",
+            "runtimeArgs": [
+                "--allow-file-access-from-files",
+				"--allow-file-access-frome-files",
+				" --disable-web-security"
+            ],
+            "webRoot": "${workspaceFolder}",
+            "userDataDir": "${workspaceFolder}/.laya/chrome",
+            "preLaunchTask": "gulp",
+            "sourceMapPathOverrides": {
+                "src/*": "${workspaceFolder}/src/*"
+            },
+            "url": "${workspaceRoot}/bin/index.html",
         }
     ]
 }

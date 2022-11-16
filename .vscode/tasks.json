@@ -17,6 +17,11 @@
 			"label": "gulpDemo",
 			"type": "shell",
 			"command": "rollup -c"
+		},
+		{
+			"label": "gulp",
+			"type": "shell",
+			"command":"gulp"
 		}
 	]
 }
