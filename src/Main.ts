@@ -1,4 +1,5 @@
-import MyLinearList from "./list/MyList";
+import LinearList from "./list/LinearList";
+import LinkList from "./list/LinkList";
 
 export default class Main {
 
@@ -9,12 +10,14 @@ export default class Main {
 
     init()
     {
-        this.doLinearList();
+        // this.doLinearList();
+        this.doLinkList();
     }
 
+    /**顺序表 */
     doLinearList()
     {
-        let list = new MyLinearList();
+        let list = new LinearList();
         let items = list.items;
         let item1 = `apple`;
         let item2 = `banner`;
@@ -33,6 +36,24 @@ export default class Main {
         list.setItem(4,item1);
         list.changeItem(item1, newItem)
         list.clear();
+    }
+
+    /**单链表 */
+    doLinkList()
+    {
+        let list = new LinkList();
+        let item1 = {value:'1'}
+        let item2 = {value:'2'}
+        let item3 = {value:'3'}
+        let item4 = {value:'4'}
+        list.addItem(item1);
+        list.addItem(item3);
+        list.addItem(item2);
+        list.console();
+        list.removeItem(item3)
+        list.console();
+        list.addItem(item4)
+        console.log(list.headItem)
     }
 }
 

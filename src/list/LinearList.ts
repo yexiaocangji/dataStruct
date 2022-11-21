@@ -3,7 +3,7 @@ import MyLog from "../utils/MyLog";
 /**
  * 线性表
  */
-export default class MyLinearList {
+export default class LinearList {
 
     private _itmes:string[];//模拟顺序存储线性表
 
