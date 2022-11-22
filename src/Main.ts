@@ -1,5 +1,6 @@
 import LinearList from "./list/LinearList";
 import LinkList from "./list/LinkList";
+import MyLog from "./utils/MyLog";
 
 export default class Main {
 
@@ -46,14 +47,22 @@ export default class Main {
         let item2 = {value:'2'}
         let item3 = {value:'3'}
         let item4 = {value:'4'}
-        list.addItem(item1);
-        list.addItem(item3);
-        list.addItem(item2);
-        list.console();
-        list.removeItem(item3)
-        list.console();
-        list.addItem(item4)
-        console.log(list.headItem)
+        list.addData(item1);
+        list.addData(item3);
+        list.addData(item2);
+        list.console(1);
+        list.removeData(item2)
+        list.console(2);
+        list.addData(item4)
+        list.console(3);
+        let newItem = {value:'5'}
+        list.insertItem(newItem, 3)
+        list.console('insert');
+        let replaceItem = {value:'6'}
+        list.replaceItem(item1, replaceItem)
+        list.console('replace');
+        MyLog.log('main',`下标是2的item的值`, list.getItemByIndex(2))
+        MyLog.log('main',list.headItem)
     }
 }
 

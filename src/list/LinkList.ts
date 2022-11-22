@@ -2,8 +2,8 @@ import MyLog from "../utils/MyLog";
 
 export default class LinkList {
 
-    private _headItem:ILinkListHead//头结点
-    private _endItem:ILinkListItem;//“最后节点
+    private _headItem:ILinkListHead//头结点(如果有下标，可以看做-1)
+    private _endItem:ILinkListItem;//最后节点，用来快速添加
 
     constructor()
     {
@@ -13,34 +13,57 @@ export default class LinkList {
     init()
     {
         this._headItem = {
-            value: null,
+            data: null,
             len: 0,
             nextNode:null,
         }
         this._endItem = this._headItem;
     }
 
-    addItem(item:ILinkListItem)
+    addData(data:any)
     {
-        this._endItem.nextNode = item;
-        this._endItem = item;
+        //判断data是否已经存在于list中
+        if (this.checkData(data)) {
+            MyLog.log('LinkList-addData', 'addData Failed!数据已经存在')
+            return 
+        }
+        let newItem:ILinkListItem = {
+            data:data
+        }
+        this._endItem.nextNode = newItem;
+        this._endItem = newItem;
         this._headItem.len++;
-        item.nextNode = null;
+        newItem.nextNode = null;
     }
 
-    removeItem(item:ILinkListItem)
+    checkData(data:any):boolean
+    {
+        let flag:boolean = false;
+        let item:ILinkListItem = this._headItem;
+        while (item.data != data) {
+            item = item.nextNode;
+            if (!item) break;
+        }
+        if (item && item.data == data) flag = true;
+        return flag;
+    }
+
+    removeData(data:any)
     {
         let checkItme:ILinkListItem = this._headItem;
+        let preItem:ILinkListItem;
         while (checkItme) {
-            if (checkItme.nextNode == item) {
-                checkItme.nextNode = item.nextNode;
-                item.nextNode = null;
+            if (checkItme.data == data) {
+                preItem.nextNode = checkItme.nextNode;
+                checkItme.nextNode = null;
+                checkItme.data = null;
                 this._headItem.len--;
+                if (preItem && preItem.nextNode == null) {
+                    this._endItem = preItem;//设置最后节点
+                }
                 break;
             }
-            if (checkItme.nextNode == null) {
-                this._endItem = checkItme;//只有最后节点没有指向
-            }
+            preItem = checkItme;
             checkItme = checkItme.nextNode;
         }
     }
@@ -61,11 +84,67 @@ export default class LinkList {
         this._endItem = this._headItem;
     }
 
-    console()
+    /**通过下标查找 */
+    getItemByIndex(index:Number)
     {
+        if (index >= this._headItem.len) {
+            MyLog.log('LinkList-getItemByIndex',`index:${index} 超出list长度`)
+            return null;
+        }
+        let num:number = 0;
+        let item:ILinkListItem = this._headItem.nextNode;
+        while (num < index && item) {
+            num++;
+            item = item.nextNode;
+        }
+        return item || null;
+    }
+
+    /**插入数据 */
+    insertItem(data:any, index:number)
+    {
+        if (this.checkData(data)) {
+            MyLog.log('LinkList-insertItem', 'insertItem Failed!数据已经存在')
+            return 
+        }
+        if (index < 0 || index > this._headItem.len) {
+            MyLog.log('LinkList-insertItem', 'insertItem Failed!index超出范围')
+            return 
+        }
+        let newItem:ILinkListItem = {
+            data:data
+        }
+        let num = 0;
+        let preItem:ILinkListItem = this._headItem;
+        let item:ILinkListItem = this._headItem.nextNode;
+        while (num < index && item) {
+            num++;
+            preItem = item;
+            item = item.nextNode;
+        }
+        preItem.nextNode = newItem;
+        newItem.nextNode = item;
+    }
+
+    /**替换数据 */
+    replaceItem(oldData:any, newData:any)
+    {
+        let item:ILinkListItem = this._headItem.nextNode;
+        while(item) { 
+            if (item.data == oldData) {
+                item.data = newData;
+                break;
+            }
+            item = item.nextNode;
+        }
+    }
+
+    console(tag:string | number  = '')
+    {
+        MyLog.log('LinkList-console', `tag:${tag}`)
         let item = this._headItem.nextNode;
         while (item) {
-            MyLog.log('LinkList', item.value)
+            MyLog.log('LinkList-console', item.data)
             item = item.nextNode;
         }
     }
@@ -75,7 +154,7 @@ export default class LinkList {
 }
 
 interface ILinkListItem {
-    value:string,
+    data:any,
     nextNode?:ILinkListItem,
 }
 
