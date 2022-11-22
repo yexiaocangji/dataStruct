@@ -34,7 +34,7 @@ export default class LinkList {
         while (checkItme) {
             if (checkItme.nextNode == item) {
                 checkItme.nextNode = item.nextNode;
-                delete item.nextNode;
+                item.nextNode = null;
                 this._headItem.len--;
                 break;
             }
@@ -53,11 +53,11 @@ export default class LinkList {
         let item = headItem.nextNode;
         while (item) {
             headItem.nextNode = item.nextNode//头结点指向下下节点
-            delete item.nextNode//删除下个节点与下下节点的指向
+            item.nextNode = null;//删除下个节点与下下节点的指向
             item = headItem.nextNode;//下一轮
         }
         headItem.len = 0;
-        delete headItem.nextNode;
+        headItem.nextNode = null;
         this._endItem = this._headItem;
     }
 
