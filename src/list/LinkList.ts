@@ -1,9 +1,11 @@
 import MyLog from "../utils/MyLog";
-
+/**
+ * 单向列表
+ */
 export default class LinkList {
 
     private _headItem:ILinkListHead//头结点(如果有下标，可以看做-1)
-    private _endItem:ILinkListItem;//最后节点，用来快速添加
+    private _endItem:ILinkListItem;//最后节点，用来快速添加(尾插法)
 
     constructor()
     {
@@ -28,12 +30,13 @@ export default class LinkList {
             return 
         }
         let newItem:ILinkListItem = {
-            data:data
+            data:data,
+            nextNode:null,
         }
         this._endItem.nextNode = newItem;
         this._endItem = newItem;
         this._headItem.len++;
-        newItem.nextNode = null;
+        newItem.nextNode = null;//非循环列表，不指向头结点
     }
 
     checkData(data:any):boolean
@@ -50,8 +53,8 @@ export default class LinkList {
 
     removeData(data:any)
     {
-        let checkItme:ILinkListItem = this._headItem;
-        let preItem:ILinkListItem;
+        let checkItme:ILinkListItem = this._headItem.nextNode;
+        let preItem:ILinkListItem = this._headItem;
         while (checkItme) {
             if (checkItme.data == data) {
                 preItem.nextNode = checkItme.nextNode;
@@ -77,6 +80,7 @@ export default class LinkList {
         while (item) {
             headItem.nextNode = item.nextNode//头结点指向下下节点
             item.nextNode = null;//删除下个节点与下下节点的指向
+            item.data = null;
             item = headItem.nextNode;//下一轮
         }
         headItem.len = 0;
@@ -112,7 +116,8 @@ export default class LinkList {
             return 
         }
         let newItem:ILinkListItem = {
-            data:data
+            data:data,
+            nextNode:null,
         }
         let num = 0;
         let preItem:ILinkListItem = this._headItem;

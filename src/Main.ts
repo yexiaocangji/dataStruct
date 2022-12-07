@@ -1,3 +1,4 @@
+import DulLink from "./list/DulLink";
 import LinearList from "./list/LinearList";
 import LinkList from "./list/LinkList";
 import MyLog from "./utils/MyLog";
@@ -12,7 +13,8 @@ export default class Main {
     init()
     {
         // this.doLinearList();
-        this.doLinkList();
+        // this.doLinkList();
+        this.doDulLink();
     }
 
     /**顺序表 */
@@ -63,6 +65,26 @@ export default class Main {
         list.console('replace');
         MyLog.log('main',`下标是2的item的值`, list.getItemByIndex(2))
         MyLog.log('main',list.headItem)
+    }
+
+    /**双向链表 */
+    doDulLink()
+    {
+        let list = new DulLink();
+        let item1 = {value:'1'};
+        let item2 = {value:'2'};
+        let item3 = {value:'3'};
+        let item4 = {value:'4'};
+        list.addData(item1);
+        list.addData(item2);
+        list.addData(item3);
+        list.console(1)
+        list.removeData(item2);
+        list.console(2)
+        list.insertItem(item4, 1);
+        list.console(3)
+        list.clearList()
+        MyLog.log('Main', list.headItem)
     }
 }
 
