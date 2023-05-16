@@ -1,6 +1,8 @@
 import DulLink from "./list/DulLink";
 import LinearList from "./list/LinearList";
 import LinkList from "./list/LinkList";
+import Queue from "./list/Queue";
+import Stack from "./list/Stack";
 import MyLog from "./utils/MyLog";
 
 export default class Main {
@@ -14,7 +16,8 @@ export default class Main {
     {
         // this.doLinearList();
         // this.doLinkList();
-        this.doDulLink();
+        // this.doDulLink();
+        this.doStack();
     }
 
     /**顺序表 */
@@ -85,6 +88,28 @@ export default class Main {
         list.console(3)
         list.clearList()
         MyLog.log('Main', list.headItem)
+    }
+
+    /**队列 */
+    doQueue()
+    {
+        let queue = new Queue<string>()
+    }
+
+    /**栈 */
+    doStack()
+    {
+        let stack = new Stack<string>()
+        let item1 = 'a';
+        let item2 = 'b';
+        let item3 = 'c';
+        let item4 = 'd';
+        stack.insert(item1)
+        stack.insert(item2, item3);
+        stack.console();
+        stack.getOut();
+        stack.insert(item4)
+        stack.console();
     }
 }
 
